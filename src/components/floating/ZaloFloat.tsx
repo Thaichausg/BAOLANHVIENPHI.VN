@@ -25,7 +25,7 @@ export default function ZaloFloat() {
   return (
     <button
       onClick={handleClick}
-      className="fixed bottom-6 right-4 z-50 group cursor-pointer"
+      className="fixed bottom-20 lg:bottom-6 right-4 z-50 group cursor-pointer"
       id="zalo-float"
       aria-label="Chat qua Zalo"
       type="button"

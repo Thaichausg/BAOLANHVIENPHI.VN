@@ -13,12 +13,13 @@ export default function MobileStickyBar() {
       const pageHeight = document.documentElement.scrollHeight;
       const viewportHeight = window.innerHeight;
 
-      // Show after hero (600px), hide near bottom (footer/CTA area)
-      const nearBottom = scrollY + viewportHeight > pageHeight - 400;
+      // Show after hero (600px), hide near bottom (last 600px = footer + CTA)
+      const nearBottom = scrollY + viewportHeight > pageHeight - 600;
       setVisible(scrollY > 600 && !nearBottom);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll(); // Check initial state
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -38,11 +39,11 @@ export default function MobileStickyBar() {
   if (!visible) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-40 lg:hidden">
+    <div className="fixed bottom-0 left-0 right-0 z-40 lg:hidden safe-area-bottom">
       {/* Gradient fade */}
       <div className="h-3 bg-gradient-to-t from-background to-transparent" />
 
-      <div className="bg-background/95 backdrop-blur-xl border-t border-[oklch(1_0_0/8%)] px-4 py-2.5 flex items-center gap-3 safe-area-bottom">
+      <div className="bg-background/98 backdrop-blur-xl border-t border-[oklch(1_0_0/8%)] px-4 py-2 flex items-center gap-3">
         <button
           onClick={handleCTA}
           className="flex-1 h-12 px-4 rounded-xl font-bold text-sm bg-gradient-to-r from-generali-red to-generali-red-light text-white transition-all duration-300 cursor-pointer flex items-center justify-center gap-2"

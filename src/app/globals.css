@@ -257,10 +257,3 @@
 .safe-area-bottom {
   padding-bottom: env(safe-area-inset-bottom, 0px);
 }
-
-/* Mobile: move activity feed above sticky bar */
-@media (max-width: 1023px) {
-  #activity-feed-container {
-    bottom: 5.5rem !important;
-  }
-}

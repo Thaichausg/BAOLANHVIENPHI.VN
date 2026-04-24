@@ -80,9 +80,9 @@ export default function ProofSection() {
               <div className="relative bg-gradient-to-br from-[oklch(0.18_0.01_260)] to-[oklch(0.14_0.01_260)] p-8 flex flex-col items-center justify-center min-h-[300px]">
                 <div className="w-full max-w-[240px] aspect-[3/4] rounded-xl bg-[oklch(1_0_0/5%)] border border-[oklch(1_0_0/10%)] flex flex-col items-center justify-center gap-4 p-6">
                   <FileCheck className="w-12 h-12 text-text-muted" />
-                  <div className="text-center">
-                    <p className="text-xs text-text-muted mb-1">Hóa đơn viện phí</p>
-                    <p className="text-xs text-text-muted italic">(Thông tin đã được bảo mật)</p>
+                <div className="text-center">
+                    <p className="text-xs text-text-muted mb-1">Minh họa hóa đơn</p>
+                    <p className="text-xs text-text-muted italic">(Ví dụ tham khảo)</p>
                   </div>
                   {/* Simulated blur lines */}
                   <div className="w-full space-y-2">
@@ -94,7 +94,7 @@ export default function ProofSection() {
                   </div>
                 </div>
                 <p className="text-xs text-text-muted mt-4 text-center">
-                  📋 Hóa đơn thật • Thông tin đã blur bảo mật
+                  📋 Ví dụ minh họa • Thông tin đã được ẩn
                 </p>
               </div>
 
