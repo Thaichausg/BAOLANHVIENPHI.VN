@@ -181,19 +181,19 @@ export default function HeroSection() {
                 Đi viện{" "}
               </span>
               <span className="gradient-text-red">
-                KHÔNG cần
+                KHÔNG CẦN LO
               </span>
               <br />
               <span className="text-text-primary">
-                chuẩn bị tiền mặt
+                – <span className="text-generali-gold font-semibold">Hơn 400 BV</span> Generali thanh toán
               </span>
             </h1>
 
             {/* Subtitle */}
             <p className="text-lg sm:text-xl text-text-secondary max-w-xl leading-relaxed">
-              Bảo lãnh viện phí Generali tại{" "}
-              <span className="text-generali-gold font-semibold">460+ bệnh viện</span> |
-              Hỗ trợ <span className="text-trust-green font-semibold">24/7</span>
+              <span className="text-generali-gold font-semibold">Gần 500.000 KH</span> an tâm |{" "}
+              <span className="text-trust-green font-semibold">15+ năm</span> bảo vệ |{" "}
+              <span className="text-generali-gold font-semibold">4,3 nghìn tỷ</span> chi trả
             </p>
 
             {/* Dynamic personal line – KEY CONVERSION HOOK */}
@@ -222,9 +222,9 @@ export default function HeroSection() {
             {/* Quick stats */}
             <div className="flex flex-wrap gap-6 pt-2">
               {[
-                { label: "Bệnh viện liên kết", value: "460+" },
-                { label: "Khách hàng tin dùng", value: "2M+" },
-                { label: "Năm kinh nghiệm", value: "18+" },
+                { label: "Bệnh viện liên kết", value: "400+" },
+                { label: "Khách hàng cá nhân", value: "500k" },
+                { label: "Năm kinh nghiệm", value: "15+" },
               ].map((stat) => (
                 <div key={stat.label} className="text-center">
                   <p className="text-2xl font-bold gradient-text">{stat.value}</p>

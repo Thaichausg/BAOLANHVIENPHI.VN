@@ -4,7 +4,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Bảo Lãnh Viện Phí Generali 2025 – Đi Viện Không Cần Chuẩn Bị Tiền",
   description:
-    "Bảo lãnh viện phí Generali tại 460+ bệnh viện. Không cần tạm ứng, hỗ trợ 24/7. Xem phí phù hợp với bạn ngay.",
+    "Bảo lãnh viện phí Generali tại 400+ bệnh viện. Không cần tạm ứng, hỗ trợ 24/7. Xem phí phù hợp với bạn ngay.",
   keywords: [
     "bảo lãnh viện phí",
     "generali",
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Bảo Lãnh Viện Phí Generali 2025",
     description:
-      "Đi viện không cần chuẩn bị tiền mặt. Bảo lãnh trực tiếp tại 460+ bệnh viện.",
+      "Đi viện không cần chuẩn bị tiền mặt. Bảo lãnh trực tiếp tại 400+ bệnh viện.",
     type: "website",
     locale: "vi_VN",
   },

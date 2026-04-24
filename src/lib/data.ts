@@ -34,7 +34,7 @@ export const faqData = [
   {
     question: "Có áp dụng tại mọi bệnh viện không?",
     answer:
-      "Không. Bảo lãnh viện phí áp dụng tại các bệnh viện và phòng khám nằm trong hệ thống liên kết của Generali (hiện có 460+ cơ sở). Với các bệnh viện ngoài hệ thống, bạn có thể thanh toán trước và thực hiện yêu cầu bồi thường (claim) sau.",
+      "Không. Bảo lãnh viện phí áp dụng tại các bệnh viện và phòng khám nằm trong hệ thống liên kết của Generali (hiện có 400+ cơ sở). Với các bệnh viện ngoài hệ thống, bạn có thể thanh toán trước và thực hiện yêu cầu bồi thường (claim) sau.",
   },
   {
     question: "Khi nào phải tự trả tiền?",

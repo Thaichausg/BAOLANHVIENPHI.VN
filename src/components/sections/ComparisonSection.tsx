@@ -25,7 +25,7 @@ const comparisonData = [
     other: "partial",
   },
   {
-    criteria: "460+ bệnh viện liên kết",
+    criteria: "400+ bệnh viện liên kết",
     generali: true,
     other: false,
   },

@@ -58,7 +58,7 @@ export default function ProofSection() {
 
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Title */}
-        <div className="text-center mb-16 reveal">
+        <div className="text-center mb-10 reveal">
           <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-generali-gold/10 text-generali-gold text-xs font-medium mb-6">
             <Star className="w-3.5 h-3.5" />
             Ví dụ minh họa quyền lợi
@@ -68,8 +68,27 @@ export default function ProofSection() {
             <span className="gradient-text">chi trả thật</span>
           </h2>
           <p className="text-text-secondary max-w-2xl mx-auto">
-            Ví dụ minh họa về quyền lợi bảo lãnh viện phí Generali
+            Số liệu thực tế về năng lực bảo vệ và chi trả của Generali Việt Nam
           </p>
+        </div>
+
+        {/* Real Stats Counters */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mb-16 reveal">
+          {[
+            { value: "500.000+", label: "KH cá nhân" },
+            { value: "400+", label: "BV bảo lãnh" },
+            { value: "1,5 triệu", label: "Claims chi trả" },
+            { value: "4,3 nghìn tỷ", label: "VND quyền lợi" },
+          ].map((stat, i) => (
+            <div key={i} className="glass-card rounded-2xl p-6 text-center">
+              <p className="text-2xl sm:text-3xl font-extrabold gradient-text-red mb-2">
+                {stat.value}
+              </p>
+              <p className="text-xs sm:text-sm text-text-secondary font-medium">
+                {stat.label}
+              </p>
+            </div>
+          ))}
         </div>
 
         {/* Case study card */}
@@ -287,7 +306,7 @@ export default function ProofSection() {
             </div>
           </div>
           <p className="text-center text-xs text-text-muted mt-4">
-            và 460+ bệnh viện, phòng khám trên toàn quốc
+            và 400+ bệnh viện, phòng khám trên toàn quốc
           </p>
           <p className="text-center text-[10px] text-text-muted mt-1">
             Hệ thống bệnh viện liên kết có thể thay đổi theo từng thời điểm và khu vực

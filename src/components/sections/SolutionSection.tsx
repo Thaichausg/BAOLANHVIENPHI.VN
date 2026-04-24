@@ -17,7 +17,7 @@ const steps = [
     number: "01",
     icon: Hospital,
     title: "Đến bệnh viện liên kết",
-    desc: "Chọn 1 trong 460+ bệnh viện và phòng khám trong hệ thống Generali",
+    desc: "Chọn 1 trong 400+ bệnh viện và phòng khám trong hệ thống Generali",
     color: "text-generali-gold",
     bg: "bg-generali-gold/10",
     border: "border-generali-gold/20",
