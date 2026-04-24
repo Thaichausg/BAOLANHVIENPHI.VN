@@ -33,6 +33,8 @@ export default function HeroSection() {
   const [calcTier, setCalcTier] = useState<CoverageTier>("standard");
   const [tierAutoSelected, setTierAutoSelected] = useState(false);
   const [calcHighlight, setCalcHighlight] = useState(false);
+  const [tierSource, setTierSource] = useState<"calculator_manual" | "coverage_tier_card">("calculator_manual");
+  const [submittedTierName, setSubmittedTierName] = useState("");
   const sectionRef = useRef<HTMLElement>(null);
 
   // Calculator form
@@ -56,6 +58,7 @@ export default function HeroSection() {
     const handleTierSelect = (e: CustomEvent) => {
       const { tierId, tierName, tierLimit } = e.detail;
       setCalcTier(tierId as CoverageTier);
+      setTierSource("coverage_tier_card");
       setTierAutoSelected(true);
       setCalcHighlight(true);
 
@@ -96,6 +99,25 @@ export default function HeroSection() {
   }, [doCalculate]);
 
   const onSubmitLead = async (data: LeadFormData) => {
+    const tierName = TIER_SHORT_NAMES[calcTier];
+    const coverageLimit = TIER_NAMES[calcTier];
+    const estimatedFee = result ? `${formatCurrency(result.minMonthly)}–${formatCurrency(result.maxMonthly)}/tháng` : "N/A";
+
+    // Full payload with all calculator context
+    const fullPayload = {
+      ...data,
+      selected_tier_name: tierName,
+      selected_coverage_limit: coverageLimit,
+      estimated_monthly_fee: estimatedFee,
+      age: calcAge,
+      gender: calcGender === "female" ? "Nữ" : "Nam",
+      area: calcRegion === "hcm" ? "TP.HCM" : calcRegion === "hn" ? "Hà Nội" : "Tỉnh khác",
+      number_of_people: calcPeople,
+      plan: activeTab === "basic" ? "Cơ bản" : "Nâng cao",
+      source: tierSource,
+      submitted_at: new Date().toISOString(),
+    };
+
     trackEvent({
       event: "form_submit",
       event_category: "form",
@@ -103,18 +125,21 @@ export default function HeroSection() {
       value: 1,
     });
     trackEvent({
-      event: "calculator_submit",
-      event_category: "calculator",
-      event_label: activeTab,
-      value: result?.minMonthly,
+      event: "lead_submit_with_tier",
+      event_category: "conversion",
+      tier_name: tierName,
+      coverage_limit: coverageLimit,
+      estimated_fee: estimatedFee,
+      source: tierSource,
     });
 
-    // Simulate API call
+    // Simulate API call (replace with SheetDB/webhook later)
     await new Promise((resolve) => setTimeout(resolve, 800));
-    console.log("Lead submitted:", data, "Calculator result:", result);
+    console.log("📋 LEAD PAYLOAD:", JSON.stringify(fullPayload, null, 2));
+    setSubmittedTierName(tierName);
     setSubmitted(true);
     reset();
-    setTimeout(() => setSubmitted(false), 5000);
+    setTimeout(() => setSubmitted(false), 7000);
   };
 
   return (
@@ -341,6 +366,7 @@ export default function HeroSection() {
                     value={calcTier}
                     onChange={(e) => {
                       setCalcTier(e.target.value as CoverageTier);
+                      setTierSource("calculator_manual");
                       setTierAutoSelected(false);
                     }}
                     className="w-full py-2 px-3 rounded-lg bg-[oklch(1_0_0/5%)] text-sm text-text-primary border border-[oklch(1_0_0/8%)] focus:border-generali-red/50 focus:outline-none transition cursor-pointer"
@@ -439,7 +465,9 @@ export default function HeroSection() {
                   {submitted ? (
                     <>
                       <CheckCircle2 className="w-5 h-5" />
-                      Đã nhận thông tin. Tư vấn viên sẽ liên hệ ngay!
+                      <span className="text-sm leading-tight text-left">
+                        Đã nhận! Em sẽ kiểm tra hạng mức {submittedTierName || "phù hợp"} và gửi tư vấn qua Zalo/điện thoại.
+                      </span>
                     </>
                   ) : isSubmitting ? (
                     <>
