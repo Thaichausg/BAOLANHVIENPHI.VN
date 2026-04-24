@@ -100,42 +100,46 @@ export default function ProofSection() {
 
               {/* Right - Case details */}
               <div className="p-8 lg:p-10 flex flex-col justify-center">
-                <div className="flex items-center gap-3 mb-6">
+                <div className="flex items-center gap-3 mb-5">
                   <div className="w-12 h-12 rounded-full bg-gradient-to-br from-generali-red to-generali-red-light flex items-center justify-center text-white font-bold text-lg">
                     {currentCase.name.charAt(currentCase.name.length - 1)}
                   </div>
                   <div>
                     <p className="font-bold text-text-primary">{currentCase.name}</p>
                     <p className="text-xs text-text-muted">
-                      {currentCase.age} tuổi – {currentCase.city}
+                      {currentCase.age} tuổi – {currentCase.city} – {currentCase.procedure}
                     </p>
                   </div>
                 </div>
 
-                {/* Procedure */}
-                <div className="mb-6">
-                  <p className="text-xs text-text-muted mb-1">Thủ thuật</p>
-                  <p className="text-lg font-bold text-text-primary">
-                    {currentCase.procedure}
+                {/* HIGHLIGHT: Savings summary card */}
+                <div className="bg-gradient-to-r from-trust-green/15 to-trust-green/5 rounded-xl p-5 mb-5 border border-trust-green/20 relative overflow-hidden">
+                  <div className="absolute top-2 right-3 text-4xl opacity-10">💰</div>
+                  <p className="text-xs text-trust-green font-medium mb-1">Generali đã chi trả</p>
+                  <p className="text-3xl font-extrabold text-trust-green">
+                    {formatVND(currentCase.covered)}
+                  </p>
+                  <p className="text-xs text-text-muted mt-1">
+                    trên tổng {formatVND(currentCase.totalBill)} viện phí
                   </p>
                 </div>
 
                 {/* Financial breakdown */}
-                <div className="space-y-3 mb-6">
+                <div className="space-y-2.5 mb-5">
                   <div className="flex justify-between items-center py-2 border-b border-[oklch(1_0_0/8%)]">
                     <span className="text-sm text-text-secondary">Tổng viện phí</span>
                     <span className="text-sm font-bold text-text-primary">
                       {formatVND(currentCase.totalBill)}
                     </span>
                   </div>
-                  <div className="flex justify-between items-center py-2 border-b border-trust-green/20">
-                    <span className="text-sm text-trust-green">Generali chi trả</span>
+                  <div className="flex justify-between items-center py-2 border-b border-trust-green/20 bg-trust-green/5 -mx-2 px-2 rounded">
+                    <span className="text-sm text-trust-green font-medium">✅ Generali chi trả</span>
                     <span className="text-sm font-bold text-trust-green">
                       {formatVND(currentCase.covered)}
                     </span>
                   </div>
                   <div className="flex justify-between items-center py-2">
-                    <span className="text-sm text-text-secondary">Khách thanh toán</span>
+                    <span className="text-sm text-text-secondary">Khách chỉ trả</span>
                     <span className="text-sm font-bold text-generali-gold">
                       {formatVND(currentCase.paid)}
                     </span>
@@ -143,14 +147,14 @@ export default function ProofSection() {
                 </div>
 
                 {/* Coverage percentage */}
-                <div className="bg-trust-green/10 rounded-xl p-4 mb-6">
+                <div className="bg-[oklch(1_0_0/3%)] rounded-xl p-4 mb-5">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-xs text-text-muted">Tỷ lệ chi trả</span>
-                    <span className="text-lg font-extrabold text-trust-green">
+                    <span className="text-2xl font-extrabold text-trust-green">
                       {Math.round((currentCase.covered / currentCase.totalBill) * 100)}%
                     </span>
                   </div>
-                  <div className="w-full h-2 bg-[oklch(1_0_0/10%)] rounded-full overflow-hidden">
+                  <div className="w-full h-3 bg-[oklch(1_0_0/10%)] rounded-full overflow-hidden">
                     <div
                       className="h-full bg-gradient-to-r from-trust-green to-trust-green-light rounded-full transition-all duration-1000"
                       style={{
@@ -161,8 +165,8 @@ export default function ProofSection() {
                 </div>
 
                 {/* Quote */}
-                <div className="relative">
-                  <Quote className="w-6 h-6 text-generali-gold/30 absolute -top-1 -left-1" />
+                <div className="relative bg-[oklch(1_0_0/3%)] rounded-xl p-4">
+                  <Quote className="w-5 h-5 text-generali-gold/40 absolute top-3 left-3" />
                   <p className="text-sm text-text-secondary italic pl-6 leading-relaxed">
                     &ldquo;{currentCase.quote}&rdquo;
                   </p>

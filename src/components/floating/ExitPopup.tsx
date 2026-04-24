@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { X, Calculator, ArrowRight } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { X, Calculator, ArrowRight, Clock } from "lucide-react";
 
 export default function ExitPopup() {
   const [isVisible, setIsVisible] = useState(false);
@@ -69,32 +69,36 @@ export default function ExitPopup() {
             <Calculator className="w-7 h-7 text-generali-red-light" />
           </div>
 
-          <h3 className="text-xl font-bold text-text-primary mb-3">
-            Chờ chút! 🤔
+          <h3 className="text-xl font-bold text-text-primary mb-2">
+            Chờ 5 giây ⏱️
           </h3>
+          <p className="text-base font-semibold text-generali-gold mb-2">
+            Xem phí phù hợp với bạn trước khi rời đi
+          </p>
           <p className="text-sm text-text-secondary leading-relaxed mb-6">
-            Xem phí bảo hiểm phù hợp với bạn trước khi rời đi.
+            Chỉ cần chọn tuổi và số người – biết ngay phí hàng tháng.
             <br />
-            <span className="text-generali-gold font-medium">
-              Chỉ mất 5 giây.
+            <span className="text-text-muted text-xs flex items-center justify-center gap-1 mt-2">
+              <Clock className="w-3 h-3" />
+              Nhanh hơn đặt grab
             </span>
           </p>
 
           <button
             onClick={handleCTA}
-            className="w-full py-3.5 px-6 rounded-xl font-bold text-sm bg-gradient-to-r from-generali-red to-generali-red-light text-white hover:shadow-xl hover:shadow-generali-red/25 hover:-translate-y-0.5 transition-all duration-300 cursor-pointer flex items-center justify-center gap-2"
+            className="w-full py-4 px-6 rounded-xl font-bold text-sm bg-gradient-to-r from-generali-red to-generali-red-light text-white hover:shadow-xl hover:shadow-generali-red/25 hover:-translate-y-0.5 transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 pulse-cta"
             type="button"
           >
-            Xem phí phù hợp với tôi
+            Xem phí phù hợp với tôi NGAY
             <ArrowRight className="w-4 h-4" />
           </button>
 
           <button
             onClick={handleDismiss}
-            className="mt-3 text-xs text-text-muted hover:text-text-secondary transition cursor-pointer"
+            className="mt-4 text-xs text-text-muted hover:text-text-secondary transition cursor-pointer"
             type="button"
           >
-            Không, cảm ơn
+            Không, cảm ơn – tôi đã biết rồi
           </button>
         </div>
       </div>

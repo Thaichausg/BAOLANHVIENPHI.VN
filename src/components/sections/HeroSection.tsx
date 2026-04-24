@@ -20,6 +20,9 @@ import {
   ArrowRight,
   CheckCircle2,
   Zap,
+  Clock,
+  TrendingUp,
+  Lock,
 } from "lucide-react";
 
 export default function HeroSection() {
@@ -136,23 +139,28 @@ export default function HeroSection() {
               Hỗ trợ <span className="text-trust-green font-semibold">24/7</span>
             </p>
 
-            {/* Disclaimer */}
-            <p className="text-xs text-text-muted max-w-lg leading-relaxed">
-              ⚠️ Quyền lợi áp dụng theo điều khoản sản phẩm và bệnh viện liên kết.
-              Liên hệ tư vấn viên để được giải thích chi tiết.
-            </p>
-
-            {/* Dynamic personal line */}
+            {/* Dynamic personal line – KEY CONVERSION HOOK */}
             {result && (
-              <div className="glass-card rounded-xl p-4 border-l-4 border-l-generali-gold animate-fade-in-up">
+              <div className="glass-card rounded-xl p-4 border-l-4 border-l-generali-gold">
                 <div className="flex items-start gap-3">
-                  <Sparkles className="w-5 h-5 text-generali-gold mt-0.5 shrink-0" />
-                  <p className="text-sm text-text-secondary leading-relaxed">
-                    {result.personalLine}
-                  </p>
+                  <Sparkles className="w-5 h-5 text-generali-gold mt-0.5 shrink-0 animate-float" />
+                  <div>
+                    <p className="text-sm sm:text-base font-semibold text-text-primary leading-relaxed">
+                      {result.personalLine}
+                    </p>
+                    <p className="text-xs text-text-muted mt-1 flex items-center gap-1">
+                      <TrendingUp className="w-3 h-3" />
+                      Dựa trên hồ sơ khách hàng tương tự tại {calcRegion === "hcm" ? "TP.HCM" : calcRegion === "hn" ? "Hà Nội" : "khu vực của bạn"}
+                    </p>
+                  </div>
                 </div>
               </div>
             )}
+
+            {/* Disclaimer */}
+            <p className="text-[11px] text-text-muted max-w-lg leading-relaxed">
+              ⚠️ Quyền lợi áp dụng theo điều khoản sản phẩm và danh sách bệnh viện liên kết. Liên hệ tư vấn viên để được giải thích chi tiết.
+            </p>
 
             {/* Quick stats */}
             <div className="flex flex-wrap gap-6 pt-2">
@@ -293,28 +301,39 @@ export default function HeroSection() {
                 </div>
               </div>
 
-              {/* Result */}
+              {/* Result – CONVERSION ZONE */}
               {result && (
-                <div className="bg-gradient-to-r from-generali-red/10 to-generali-gold/10 rounded-xl p-5 mb-6 border border-generali-red/20">
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-xs text-text-muted">Khoảng phí ước tính</span>
-                    {result.badge && (
-                      <Badge className="bg-generali-gold/20 text-generali-gold border-generali-gold/30 text-xs">
-                        <Zap className="w-3 h-3 mr-1" />
-                        {result.badge}
-                      </Badge>
-                    )}
+                <div className="bg-gradient-to-r from-generali-red/10 to-generali-gold/10 rounded-xl p-5 mb-6 border border-generali-red/20 relative overflow-hidden">
+                  {/* Shimmer effect */}
+                  <div className="absolute inset-0 shimmer pointer-events-none" />
+                  
+                  <div className="relative">
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-xs text-text-muted">Khoảng phí ước tính</span>
+                      {result.badge && (
+                        <Badge className="bg-generali-gold/20 text-generali-gold border-generali-gold/30 text-xs animate-pulse">
+                          <Zap className="w-3 h-3 mr-1" />
+                          {result.badge}
+                        </Badge>
+                      )}
+                    </div>
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-2xl sm:text-3xl font-extrabold gradient-text">
+                        ~{formatCurrency(result.minMonthly)} – {formatCurrency(result.maxMonthly)}
+                      </span>
+                      <span className="text-sm text-text-muted">/tháng</span>
+                    </div>
+                    <p className="text-xs text-text-muted mt-2">
+                      ≈ {formatCurrency(result.minYearly)} – {formatCurrency(result.maxYearly)}/năm
+                      {calcPeople > 1 && " • Đã áp dụng ưu đãi nhóm"}
+                    </p>
+                    <div className="flex items-center gap-1.5 mt-3 pt-3 border-t border-[oklch(1_0_0/8%)]">
+                      <TrendingUp className="w-3 h-3 text-trust-green" />
+                      <span className="text-[11px] text-trust-green font-medium">
+                        Dựa trên hồ sơ khách hàng tương tự
+                      </span>
+                    </div>
                   </div>
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-2xl sm:text-3xl font-extrabold gradient-text">
-                      {formatCurrency(result.minMonthly)} – {formatCurrency(result.maxMonthly)}
-                    </span>
-                    <span className="text-sm text-text-muted">/tháng</span>
-                  </div>
-                  <p className="text-xs text-text-muted mt-2">
-                    ≈ {formatCurrency(result.minYearly)} – {formatCurrency(result.maxYearly)}/năm
-                    {calcPeople > 1 && " • Đã áp dụng ưu đãi nhóm"}
-                  </p>
                 </div>
               )}
 
@@ -348,7 +367,7 @@ export default function HeroSection() {
                 <button
                   type="submit"
                   disabled={isSubmitting || submitted}
-                  className={`w-full py-3.5 px-6 rounded-xl font-bold text-base transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 ${
+                  className={`w-full py-4 px-6 rounded-xl font-bold text-base transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 ${
                     submitted
                       ? "bg-trust-green text-white"
                       : "bg-gradient-to-r from-generali-red to-generali-red-light text-white hover:shadow-xl hover:shadow-generali-red/25 hover:-translate-y-0.5 pulse-cta"
@@ -358,28 +377,41 @@ export default function HeroSection() {
                   {submitted ? (
                     <>
                       <CheckCircle2 className="w-5 h-5" />
-                      Đã gửi! Tư vấn viên sẽ liên hệ bạn
+                      Đã gửi! Tư vấn viên sẽ liên hệ bạn ngay
                     </>
                   ) : isSubmitting ? (
-                    "Đang gửi..."
+                    <>
+                      <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      Đang gửi...
+                    </>
                   ) : (
                     <>
-                      Nhận báo giá CHÍNH XÁC trong 30s
+                      Xem phí phù hợp với bạn NGAY
                       <ArrowRight className="w-5 h-5" />
                     </>
                   )}
                 </button>
 
-                <p className="text-center text-xs text-text-muted flex items-center justify-center gap-1.5">
-                  <Phone className="w-3 h-3" />
-                  Hoặc gọi ngay:{" "}
-                  <a
-                    href="tel:1900545453"
-                    className="text-generali-red-light hover:underline font-medium"
-                  >
-                    1900 545 453
-                  </a>
-                </p>
+                {/* Micro-trust signals under CTA */}
+                <div className="flex items-center justify-center gap-4 text-[11px] text-text-muted">
+                  <span className="flex items-center gap-1">
+                    <Lock className="w-3 h-3 text-trust-green" />
+                    Bảo mật
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <Clock className="w-3 h-3 text-generali-gold" />
+                    Phản hồi 30s
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <Phone className="w-3 h-3 text-generali-red-light" />
+                    <a
+                      href="tel:1900545453"
+                      className="text-generali-red-light hover:underline font-medium"
+                    >
+                      1900 545 453
+                    </a>
+                  </span>
+                </div>
               </form>
             </div>
           </div>

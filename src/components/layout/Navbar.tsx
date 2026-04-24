@@ -64,7 +64,7 @@ export default function Navbar() {
           {/* CTA + Mobile toggle */}
           <div className="flex items-center gap-3">
             <a
-              href="#cta"
+              href="#calculator"
               className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-generali-red/15 text-generali-red-light text-sm font-medium hover:bg-generali-red/25 transition-colors"
             >
               <Phone className="w-3.5 h-3.5" />
@@ -103,12 +103,12 @@ export default function Navbar() {
               </a>
             ))}
             <a
-              href="#cta"
+              href="#calculator"
               onClick={() => setIsMobileOpen(false)}
               className="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-generali-red text-white text-sm font-bold mt-2"
             >
               <Phone className="w-4 h-4" />
-              Tư vấn ngay
+              Xem phí phù hợp NGAY
             </a>
           </nav>
         </div>

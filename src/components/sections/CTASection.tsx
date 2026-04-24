@@ -153,13 +153,16 @@ export default function CTASection() {
               {submitted ? (
                 <>
                   <CheckCircle2 className="w-5 h-5" />
-                  Đã gửi thành công! Tư vấn viên sẽ liên hệ bạn
+                  Đã gửi! Tư vấn viên sẽ liên hệ bạn ngay
                 </>
               ) : isSubmitting ? (
-                "Đang gửi..."
+                <>
+                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  Đang gửi...
+                </>
               ) : (
                 <>
-                  Xem báo giá ngay
+                  Nhận báo giá CHÍNH XÁC trong 30s
                   <ArrowRight className="w-5 h-5" />
                 </>
               )}

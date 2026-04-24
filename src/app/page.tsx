@@ -11,6 +11,7 @@ import CTASection from "@/components/sections/CTASection";
 import ActivityFeed from "@/components/floating/ActivityFeed";
 import ZaloFloat from "@/components/floating/ZaloFloat";
 import ExitPopup from "@/components/floating/ExitPopup";
+import MobileStickyBar from "@/components/floating/MobileStickyBar";
 
 export default function Home() {
   return (
@@ -32,6 +33,7 @@ export default function Home() {
       <ActivityFeed />
       <ZaloFloat />
       <ExitPopup />
+      <MobileStickyBar />
 
       {/* GA4 Script placeholder */}
       {/* 
