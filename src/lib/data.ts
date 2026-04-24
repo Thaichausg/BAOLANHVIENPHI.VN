@@ -19,7 +19,7 @@ export const hospitalPartners = [
   { name: "Hoàn Mỹ", logo: "/logos/hoan-my.png" },
   { name: "Việt Pháp", logo: "/logos/viet-phap.png" },
   { name: "Thu Cúc", logo: "/logos/thu-cuc.png" },
-  { name: "Đại học Y Dược", logo: "/logos/y-duoc.png" },
+  { name: "Đại học Y Dược", logo: "/logos/y-duoc.jpg" },
   { name: "Bệnh viện 115", logo: "/logos/bv-115.png" },
   { name: "Chợ Rẫy", logo: "/logos/cho-ray.png" },
 ];
