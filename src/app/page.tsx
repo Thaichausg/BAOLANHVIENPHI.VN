@@ -4,6 +4,7 @@ import HeroSection from "@/components/sections/HeroSection";
 import PainSection from "@/components/sections/PainSection";
 import SolutionSection from "@/components/sections/SolutionSection";
 import BenefitsSection from "@/components/sections/BenefitsSection";
+import CoverageTiersSection from "@/components/sections/CoverageTiersSection";
 import ProofSection from "@/components/sections/ProofSection";
 import ObjectionSection from "@/components/sections/ObjectionSection";
 import ComparisonSection from "@/components/sections/ComparisonSection";
@@ -23,6 +24,7 @@ export default function Home() {
         <PainSection />
         <SolutionSection />
         <BenefitsSection />
+        <CoverageTiersSection />
         <ProofSection />
         <ObjectionSection />
         <ComparisonSection />
