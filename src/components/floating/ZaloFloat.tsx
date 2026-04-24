@@ -16,7 +16,7 @@ export default function ZaloFloat() {
     });
 
     window.open(
-      `https://zalo.me/0901234567?text=${zaloMessage}`,
+      `https://zalo.me/0909111326?text=${zaloMessage}`,
       "_blank",
       "noopener,noreferrer"
     );
