@@ -104,6 +104,17 @@ export default function CoverageTiersSection() {
       value: tier.limitNum,
     });
 
+    // Dispatch custom event for HeroSection calculator to auto-select tier
+    window.dispatchEvent(
+      new CustomEvent("tierSelect", {
+        detail: {
+          tierId: tier.id,
+          tierName: tier.name,
+          tierLimit: tier.limit,
+        },
+      })
+    );
+
     // Scroll to calculator
     document.getElementById("calculator")?.scrollIntoView({
       behavior: "smooth",

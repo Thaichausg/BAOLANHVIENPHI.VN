@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { calculatorFormSchema, leadFormSchema, type LeadFormData } from "@/lib/schemas";
-import { calculatePremium, formatCurrency, type CalculatorOutput } from "@/lib/calculator";
+import { calculatePremium, formatCurrency, TIER_NAMES, TIER_SHORT_NAMES, type CalculatorOutput, type CoverageTier } from "@/lib/calculator";
 import { trackEvent } from "@/lib/tracking";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -30,6 +30,9 @@ export default function HeroSection() {
   const [result, setResult] = useState<CalculatorOutput | null>(null);
   const [submitted, setSubmitted] = useState(false);
   const [activeTab, setActiveTab] = useState<"basic" | "advanced">("basic");
+  const [calcTier, setCalcTier] = useState<CoverageTier>("standard");
+  const [tierAutoSelected, setTierAutoSelected] = useState(false);
+  const [calcHighlight, setCalcHighlight] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
   // Calculator form
@@ -48,6 +51,31 @@ export default function HeroSection() {
     resolver: zodResolver(leadFormSchema),
   });
 
+  // Listen for tier auto-select from CoverageTiersSection
+  useEffect(() => {
+    const handleTierSelect = (e: CustomEvent) => {
+      const { tierId, tierName, tierLimit } = e.detail;
+      setCalcTier(tierId as CoverageTier);
+      setTierAutoSelected(true);
+      setCalcHighlight(true);
+
+      trackEvent({
+        event: "coverage_tier_auto_selected",
+        event_category: "calculator",
+        tier_name: tierName,
+        coverage_limit: tierLimit,
+      });
+
+      // Remove highlight after 2s
+      setTimeout(() => setCalcHighlight(false), 2000);
+      // Remove auto-select message after 5s
+      setTimeout(() => setTierAutoSelected(false), 5000);
+    };
+
+    window.addEventListener("tierSelect", handleTierSelect as EventListener);
+    return () => window.removeEventListener("tierSelect", handleTierSelect as EventListener);
+  }, []);
+
   // Auto-calculate on any change
   const doCalculate = useCallback(() => {
     const data = calculatorFormSchema.safeParse({
@@ -56,11 +84,12 @@ export default function HeroSection() {
       people: calcPeople,
       region: calcRegion,
       plan: activeTab,
+      tier: calcTier,
     });
     if (data.success) {
       setResult(calculatePremium(data.data));
     }
-  }, [calcAge, calcGender, calcPeople, calcRegion, activeTab]);
+  }, [calcAge, calcGender, calcPeople, calcRegion, activeTab, calcTier]);
 
   useEffect(() => {
     doCalculate();
@@ -183,7 +212,7 @@ export default function HeroSection() {
           {/* Right column - Calculator + Form */}
           <div className="space-y-6">
             {/* Calculator card */}
-            <div className="glass-card rounded-2xl p-6 lg:p-8" id="calculator">
+            <div className={`glass-card rounded-2xl p-6 lg:p-8 transition-all duration-500 ${calcHighlight ? "ring-2 ring-generali-gold/50 shadow-xl shadow-generali-gold/10" : ""}`} id="calculator">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-10 h-10 rounded-xl bg-generali-red/20 flex items-center justify-center">
                   <Calculator className="w-5 h-5 text-generali-red" />
@@ -302,6 +331,33 @@ export default function HeroSection() {
                     <option value="other">Tỉnh khác</option>
                   </select>
                 </div>
+
+                {/* Tier selector */}
+                <div className="col-span-2 space-y-2">
+                  <Label className="text-xs text-text-muted flex items-center gap-1.5">
+                    <Shield className="w-3.5 h-3.5" /> Hạng mức bảo vệ
+                  </Label>
+                  <select
+                    value={calcTier}
+                    onChange={(e) => {
+                      setCalcTier(e.target.value as CoverageTier);
+                      setTierAutoSelected(false);
+                    }}
+                    className="w-full py-2 px-3 rounded-lg bg-[oklch(1_0_0/5%)] text-sm text-text-primary border border-[oklch(1_0_0/8%)] focus:border-generali-red/50 focus:outline-none transition cursor-pointer"
+                    id="calc-tier"
+                  >
+                    {(Object.keys(TIER_NAMES) as CoverageTier[]).map((t) => (
+                      <option key={t} value={t}>
+                        {TIER_NAMES[t]}
+                      </option>
+                    ))}
+                  </select>
+                  {tierAutoSelected && (
+                    <p className="text-[11px] text-generali-gold font-medium animate-fade-in-up">
+                      ✨ Bạn đang xem phí theo hạng mức: {TIER_SHORT_NAMES[calcTier]}
+                    </p>
+                  )}
+                </div>
               </div>
 
               {/* Result – CONVERSION ZONE */}
@@ -336,6 +392,9 @@ export default function HeroSection() {
                         Dựa trên hồ sơ khách hàng tương tự
                       </span>
                     </div>
+                    <p className="text-[10px] text-text-muted mt-2 leading-relaxed">
+                      Phí hiển thị chỉ là ước tính tham khảo. Phí chính xác phụ thuộc tuổi, giới tính, tình trạng sức khỏe, quyền lợi bổ sung và thẩm định của công ty bảo hiểm.
+                    </p>
                   </div>
                 </div>
               )}

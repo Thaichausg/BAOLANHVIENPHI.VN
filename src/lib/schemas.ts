@@ -22,6 +22,7 @@ export const calculatorFormSchema = z.object({
   people: z.number().min(1, "Ít nhất 1 người").max(10, "Tối đa 10 người"),
   region: z.enum(["hcm", "hn", "other"]),
   plan: z.enum(["basic", "advanced"]),
+  tier: z.enum(["saving", "standard", "premium", "vip", "diamond"]),
 });
 
 export type CalculatorFormData = z.infer<typeof calculatorFormSchema>;

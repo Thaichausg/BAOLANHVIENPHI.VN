@@ -1,12 +1,15 @@
 // Calculator logic for insurance premium estimation
 // Based on real Generali VITA pricing structure (approximated ranges)
 
+export type CoverageTier = "saving" | "standard" | "premium" | "vip" | "diamond";
+
 export interface CalculatorInput {
   age: number;
   gender: "male" | "female";
   people: number;
   region: "hcm" | "hn" | "other";
   plan: "basic" | "advanced";
+  tier: CoverageTier;
 }
 
 export interface CalculatorOutput {
@@ -16,6 +19,7 @@ export interface CalculatorOutput {
   maxYearly: number;
   badge: string | null;
   personalLine: string;
+  tierName: string;
 }
 
 // Base monthly premiums (thousands VND) per age range
@@ -52,6 +56,32 @@ const GENDER_MULTIPLIER: Record<string, number> = {
   female: 1.08,
 };
 
+// Coverage tier multiplier – adjusts estimate based on selected coverage level
+const TIER_MULTIPLIER: Record<CoverageTier, number> = {
+  saving: 0.7,
+  standard: 1.0,
+  premium: 1.45,
+  vip: 2.2,
+  diamond: 3.8,
+};
+
+// Tier display names
+export const TIER_NAMES: Record<CoverageTier, string> = {
+  saving: "Tiết kiệm – 120 triệu/năm",
+  standard: "Tiêu chuẩn – 350 triệu/năm",
+  premium: "Cao cấp – 650 triệu/năm",
+  vip: "VIP – 1,4 tỷ/năm",
+  diamond: "Kim cương – 5 tỷ/năm",
+};
+
+export const TIER_SHORT_NAMES: Record<CoverageTier, string> = {
+  saving: "Tiết kiệm",
+  standard: "Tiêu chuẩn",
+  premium: "Cao cấp",
+  vip: "VIP",
+  diamond: "Kim cương",
+};
+
 // Multi-person discount
 function getMultiDiscount(people: number): number {
   if (people >= 4) return 0.88;
@@ -66,8 +96,9 @@ export function calculatePremium(input: CalculatorInput): CalculatorOutput {
   const regionMul = REGION_MULTIPLIER[input.region];
   const genderMul = GENDER_MULTIPLIER[input.gender];
   const discount = getMultiDiscount(input.people);
+  const tierMul = TIER_MULTIPLIER[input.tier];
 
-  const estimated = base * regionMul * genderMul * discount;
+  const estimated = base * regionMul * genderMul * discount * tierMul;
 
   // Add variance range (±12%)
   const minMonthly = Math.round(estimated * 0.88);
@@ -77,9 +108,9 @@ export function calculatePremium(input: CalculatorInput): CalculatorOutput {
 
   // Badge logic
   let badge: string | null = null;
-  if (input.plan === "basic" && input.age >= 25 && input.age <= 45) {
+  if (input.tier === "premium" || input.tier === "standard") {
     badge = "Phổ biến nhất";
-  } else if (input.plan === "advanced") {
+  } else if (input.tier === "diamond" || input.tier === "vip") {
     badge = "Bảo vệ toàn diện";
   } else if (input.people >= 3) {
     badge = "Ưu đãi gia đình";
@@ -87,9 +118,9 @@ export function calculatePremium(input: CalculatorInput): CalculatorOutput {
 
   // Generate personal line
   const ageGroup = input.age < 30 ? "trẻ" : input.age < 50 ? "độ tuổi vàng" : "trung niên";
-  const planName = input.plan === "basic" ? "Cơ bản" : "Nâng cao";
+  const tierName = TIER_SHORT_NAMES[input.tier];
 
-  const personalLine = `Người ${input.age} tuổi ${ageGroup} như bạn thường chọn gói ${planName} từ ${formatCurrency(minMonthly)}–${formatCurrency(maxMonthly)}/tháng`;
+  const personalLine = `Người ${input.age} tuổi ${ageGroup} như bạn thường chọn hạng mức ${tierName} từ ${formatCurrency(minMonthly)}–${formatCurrency(maxMonthly)}/tháng`;
 
   return {
     minMonthly,
@@ -98,6 +129,7 @@ export function calculatePremium(input: CalculatorInput): CalculatorOutput {
     maxYearly,
     badge,
     personalLine,
+    tierName,
   };
 }
 
