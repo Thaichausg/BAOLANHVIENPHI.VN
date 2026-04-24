@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { X, Calculator, ArrowRight, Clock } from "lucide-react";
+import { trackEvent } from "@/lib/tracking";
 
 export default function ExitPopup() {
   const [isVisible, setIsVisible] = useState(false);
@@ -34,8 +35,12 @@ export default function ExitPopup() {
   };
 
   const handleCTA = () => {
+    trackEvent({
+      event: "exit_popup_click",
+      event_category: "engagement",
+      event_label: "exit_popup_cta",
+    });
     handleDismiss();
-    // Scroll to calculator
     document.getElementById("calculator")?.scrollIntoView({
       behavior: "smooth",
       block: "center",

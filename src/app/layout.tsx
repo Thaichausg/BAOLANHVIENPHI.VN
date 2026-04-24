@@ -37,10 +37,16 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         <meta name="robots" content="index, follow" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
         <link
           href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap"
           rel="stylesheet"
+        />
+        {/* Initialize dataLayer for GTM */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.dataLayer = window.dataLayer || [];`,
+          }}
         />
       </head>
       <body className="min-h-full flex flex-col bg-background text-foreground">

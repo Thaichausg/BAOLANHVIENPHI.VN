@@ -1,6 +1,7 @@
 "use client";
 
 import { MessageCircle } from "lucide-react";
+import { trackEvent } from "@/lib/tracking";
 
 export default function ZaloFloat() {
   const zaloMessage = encodeURIComponent(
@@ -8,15 +9,11 @@ export default function ZaloFloat() {
   );
 
   const handleClick = () => {
-    // Track GA4 event
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const w = window as any;
-    if (typeof window !== "undefined" && w.gtag) {
-      w.gtag("event", "zalo_click", {
-        event_category: "engagement",
-        event_label: "zalo_float",
-      });
-    }
+    trackEvent({
+      event: "zalo_click",
+      event_category: "engagement",
+      event_label: "zalo_float",
+    });
 
     window.open(
       `https://zalo.me/0901234567?text=${zaloMessage}`,
@@ -37,7 +34,7 @@ export default function ZaloFloat() {
         {/* Pulse ring */}
         <div className="absolute inset-0 rounded-full bg-[#0068FF] animate-ping opacity-20" />
 
-        {/* Button */}
+        {/* Button - 48px minimum touch target */}
         <div className="relative w-14 h-14 rounded-full bg-[#0068FF] flex items-center justify-center shadow-lg shadow-[#0068FF]/30 group-hover:scale-110 group-hover:shadow-xl group-hover:shadow-[#0068FF]/40 transition-all duration-300">
           <MessageCircle className="w-6 h-6 text-white" />
         </div>

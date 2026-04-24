@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { calculatorFormSchema, leadFormSchema, type LeadFormData } from "@/lib/schemas";
 import { calculatePremium, formatCurrency, type CalculatorOutput } from "@/lib/calculator";
+import { trackEvent } from "@/lib/tracking";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -66,16 +67,18 @@ export default function HeroSection() {
   }, [doCalculate]);
 
   const onSubmitLead = async (data: LeadFormData) => {
-    // Track GA4 event
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const w = window as any;
-    if (typeof window !== "undefined" && w.gtag) {
-      w.gtag("event", "generate_lead", {
-        event_category: "form",
-        event_label: "hero_form",
-        value: 1,
-      });
-    }
+    trackEvent({
+      event: "form_submit",
+      event_category: "form",
+      event_label: "hero_form",
+      value: 1,
+    });
+    trackEvent({
+      event: "calculator_submit",
+      event_category: "calculator",
+      event_label: activeTab,
+      value: result?.minMonthly,
+    });
 
     // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 800));
@@ -377,7 +380,7 @@ export default function HeroSection() {
                   {submitted ? (
                     <>
                       <CheckCircle2 className="w-5 h-5" />
-                      Đã gửi! Tư vấn viên sẽ liên hệ bạn ngay
+                      Đã nhận thông tin. Tư vấn viên sẽ liên hệ ngay!
                     </>
                   ) : isSubmitting ? (
                     <>

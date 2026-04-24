@@ -61,14 +61,14 @@ export default function ProofSection() {
         <div className="text-center mb-16 reveal">
           <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-generali-gold/10 text-generali-gold text-xs font-medium mb-6">
             <Star className="w-3.5 h-3.5" />
-            Bằng chứng thật
+            Ví dụ minh họa quyền lợi
           </span>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-text-primary leading-tight mb-4">
             Khách hàng thật –{" "}
             <span className="gradient-text">chi trả thật</span>
           </h2>
           <p className="text-text-secondary max-w-2xl mx-auto">
-            Những câu chuyện thực tế từ khách hàng đã sử dụng bảo lãnh viện phí Generali
+            Ví dụ minh họa về quyền lợi bảo lãnh viện phí Generali
           </p>
         </div>
 
@@ -218,6 +218,11 @@ export default function ProofSection() {
             </div>
           )}
         </div>
+
+        {/* Compliance disclaimer */}
+        <p className="text-center text-[11px] text-text-muted max-w-2xl mx-auto mt-6 leading-relaxed">
+          ⚠️ Số tiền chi trả thực tế phụ thuộc điều khoản hợp đồng, hồ sơ y tế và quy trình thẩm định của Generali. Ví dụ trên mang tính minh họa.
+        </p>
 
         {/* Video testimonial placeholder */}
         <div className="reveal mb-16">

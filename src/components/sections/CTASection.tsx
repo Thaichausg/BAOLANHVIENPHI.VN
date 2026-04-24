@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { leadFormSchema, type LeadFormData } from "@/lib/schemas";
+import { trackEvent } from "@/lib/tracking";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -53,16 +54,12 @@ export default function CTASection() {
   }, []);
 
   const onSubmit = async (data: LeadFormData) => {
-    // Track GA4
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const w = window as any;
-    if (typeof window !== "undefined" && w.gtag) {
-      w.gtag("event", "generate_lead", {
-        event_category: "form",
-        event_label: "final_cta",
-        value: 1,
-      });
-    }
+    trackEvent({
+      event: "form_submit",
+      event_category: "form",
+      event_label: "final_cta",
+      value: 1,
+    });
 
     await new Promise((resolve) => setTimeout(resolve, 800));
     console.log("Final CTA lead:", data);
@@ -153,7 +150,7 @@ export default function CTASection() {
               {submitted ? (
                 <>
                   <CheckCircle2 className="w-5 h-5" />
-                  Đã gửi! Tư vấn viên sẽ liên hệ bạn ngay
+                  Đã nhận thông tin. Tư vấn viên sẽ liên hệ để kiểm tra gói phù hợp.
                 </>
               ) : isSubmitting ? (
                 <>

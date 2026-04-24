@@ -41,6 +41,7 @@ export default function ActivityFeed() {
 
   return (
     <div
+      id="activity-feed-container"
       className={`fixed bottom-24 left-4 z-40 max-w-[300px] ${
         isExiting ? "animate-slide-out" : "animate-slide-in"
       }`}
